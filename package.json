@@ -1,3 +1,10 @@
 {
+  "scripts": {
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2",
+    "prettier-plugin-organize-imports": "^4.2.0"
+  },
   "packageManager": "pnpm@10.14.0"
 }
