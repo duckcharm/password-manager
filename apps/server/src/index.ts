@@ -2,6 +2,7 @@ import "dotenv/config";
 
 import bcrypt from "bcrypt";
 import express from "express";
+import jwt from "jsonwebtoken";
 import { createServer } from "node:http";
 import { User } from "./models/user";
 import { sequelize, testDbConnection } from "./sequelize";
@@ -29,19 +30,21 @@ app.post("/login", async (req, res) => {
     return res.status(401).json({ message: "Invalid username or password" });
   }
 
-  res.json({ user });
+  const token = jwt.sign({ sub: user.id }, process.env.JWT_SECRET!);
+
+  res.json({ token });
 });
 
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
 
   const passwordHash = await bcrypt.hash(password, 10);
-  const user = await User.create({
+  await User.create({
     username,
     passwordHash,
   });
 
-  res.status(201).json({ user });
+  res.status(201).json({ message: "User created" });
 });
 
 // TODO: create vault
