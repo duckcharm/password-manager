@@ -1,0 +1,8 @@
+services:
+  pg:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: example
+    ports:
+      - 5432:5432

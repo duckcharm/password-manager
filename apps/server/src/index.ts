@@ -1,5 +1,7 @@
+import "dotenv/config";
 import express from "express";
 import { createServer } from "node:http";
+import { testDbConnection } from "./sequelize";
 
 const app = express();
 const server = createServer(app);
@@ -34,6 +36,8 @@ app.post("/register", (req, res) => {
 });
 
 const port = process.env.PORT || 3000;
-server.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+testDbConnection().then(() => {
+  server.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
+  });
 });

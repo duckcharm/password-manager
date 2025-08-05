@@ -6,7 +6,9 @@
     "target": "esnext",
     "module": "commonjs",
     "esModuleInterop": true,
-    "strict": true
+    "strict": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": ["**/*"],
   "exclude": ["node_modules"]
