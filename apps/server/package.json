@@ -2,8 +2,12 @@
   "scripts": {
     "dev": "nodemon src/index.ts"
   },
+  "dependencies": {
+    "express": "^5.1.0"
+  },
   "devDependencies": {
     "@swc/core": "^1.13.3",
+    "@types/express": "^5.0.3",
     "@types/node": "^24.2.0",
     "nodemon": "^3.1.10",
     "ts-node": "^10.9.2",
