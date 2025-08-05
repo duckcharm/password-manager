@@ -1,12 +1,10 @@
 import { Sequelize } from "sequelize-typescript";
-import { basename, equalsIgnoreCase } from "./utils";
+import { equalsIgnoreCase } from "./utils";
 
 export const sequelize = new Sequelize(process.env.DB_URL!, {
   dialect: "postgres",
   models: [__dirname + "/models"],
-  modelMatch: (filename, member) => {
-    return equalsIgnoreCase(basename(filename), member);
-  },
+  modelMatch: (filename, member) => equalsIgnoreCase(filename, member),
   logging: false,
 });
 
