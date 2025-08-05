@@ -1,11 +1,21 @@
+import axios from "axios";
 import { useState } from "react";
+import { useAuthStore } from "../stores/auth";
 
 export function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const setToken = useAuthStore((state) => state.setToken);
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const { data } = await axios.post("/api/login", {
+      username,
+      password,
+    });
+    if (data.token) {
+      setToken(data.token);
+    }
   };
 
   return (
