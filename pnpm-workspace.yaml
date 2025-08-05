@@ -2,5 +2,6 @@ packages:
   - apps/*
 
 onlyBuiltDependencies:
-  - "@swc/core"
+  - '@swc/core'
+  - bcrypt
   - esbuild

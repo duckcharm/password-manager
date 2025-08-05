@@ -1,4 +1,6 @@
 import "dotenv/config";
+
+import bcrypt from "bcrypt";
 import express from "express";
 import { createServer } from "node:http";
 import { User } from "./models/user";
@@ -18,7 +20,12 @@ app.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
   const user = await User.findOne({ where: { username } });
-  if (!user || user.password !== password) {
+  if (!user) {
+    return res.status(401).json({ message: "Invalid username or password" });
+  }
+
+  const compareResult = await bcrypt.compare(password, user.passwordHash);
+  if (!compareResult) {
     return res.status(401).json({ message: "Invalid username or password" });
   }
 
@@ -28,13 +35,16 @@ app.post("/login", async (req, res) => {
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
 
+  const passwordHash = await bcrypt.hash(password, 10);
   const user = await User.create({
     username,
-    password,
+    passwordHash,
   });
 
   res.status(201).json({ user });
 });
+
+// TODO: create vault
 
 const port = process.env.PORT || 3000;
 testDbConnection().then(async () => {

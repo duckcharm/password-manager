@@ -6,5 +6,5 @@ export class User extends Model {
   declare username: string;
 
   @Column
-  declare password: string;
+  declare passwordHash: string;
 }
