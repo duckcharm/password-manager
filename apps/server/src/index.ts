@@ -1,7 +1,8 @@
 import "dotenv/config";
 import express from "express";
 import { createServer } from "node:http";
-import { testDbConnection } from "./sequelize";
+import { User } from "./models/user";
+import { sequelize, testDbConnection } from "./sequelize";
 
 const app = express();
 const server = createServer(app);
@@ -13,30 +14,32 @@ app.get("/ping", (req, res) => {
   res.send("pong");
 });
 
-app.post("/login", (req, res) => {
+app.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
-  const user = {
-    username,
-    password,
-  };
+  const user = await User.findOne({ where: { username } });
+  if (!user || user.password !== password) {
+    return res.status(401).json({ message: "Invalid username or password" });
+  }
 
   res.json({ user });
 });
 
-app.post("/register", (req, res) => {
+app.post("/register", async (req, res) => {
   const { username, password } = req.body;
 
-  const user = {
+  const user = await User.create({
     username,
     password,
-  };
+  });
 
   res.status(201).json({ user });
 });
 
 const port = process.env.PORT || 3000;
-testDbConnection().then(() => {
+testDbConnection().then(async () => {
+  await sequelize.sync({ force: true });
+
   server.listen(port, () => {
     console.log(`Server listening on port ${port}`);
   });
