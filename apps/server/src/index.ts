@@ -3,6 +3,7 @@ import "dotenv/config";
 import bcrypt from "bcrypt";
 import express from "express";
 import jwt from "jsonwebtoken";
+import morgan from "morgan";
 import { createServer } from "node:http";
 import { User } from "./models/user";
 import { sequelize, testDbConnection } from "./sequelize";
@@ -12,6 +13,7 @@ const server = createServer(app);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(morgan("tiny"));
 
 app.get("/ping", (req, res) => {
   res.send("pong");
