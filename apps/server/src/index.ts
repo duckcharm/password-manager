@@ -32,9 +32,11 @@ app.post("/login", async (req, res) => {
     return res.status(401).json({ message: "Invalid username or password" });
   }
 
-  const token = jwt.sign({ sub: user.id }, process.env.JWT_SECRET!);
+  const token = jwt.sign({ sub: user.id }, process.env.JWT_SECRET!, {
+    expiresIn: "1hr",
+  });
 
-  res.json({ token });
+  res.json({ accessToken: token });
 });
 
 app.post("/register", async (req, res) => {
