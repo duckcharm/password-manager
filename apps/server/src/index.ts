@@ -36,7 +36,7 @@ app.post("/login", async (req, res) => {
     expiresIn: "1hr",
   });
 
-  res.json({ accessToken: token });
+  res.json({ token });
 });
 
 app.post("/register", async (req, res) => {
