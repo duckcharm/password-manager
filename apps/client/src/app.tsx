@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 import { CreateAccount } from "./pages/accounts/create";
+import { Dashboard } from "./pages/dashboard";
 import { Home } from "./pages/home";
 import { Login } from "./pages/login";
 import { NotFound } from "./pages/not-found";
@@ -12,6 +13,7 @@ export function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/accounts/create" element={<CreateAccount />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

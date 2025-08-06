@@ -1,11 +1,13 @@
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { useAuthStore } from "../stores/auth";
 
 export function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const setToken = useAuthStore((state) => state.setToken);
+  const navigate = useNavigate();
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,6 +17,7 @@ export function Login() {
     });
     if (data.token) {
       setToken(data.token);
+      navigate("/dashboard");
     }
   };
 
