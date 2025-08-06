@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router";
+import { Protected } from "./components/protected";
 import { CreateAccount } from "./pages/accounts/create";
 import { Dashboard } from "./pages/dashboard";
 import { Home } from "./pages/home";
@@ -13,8 +14,10 @@ export function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/accounts/create" element={<CreateAccount />} />
+        <Route element={<Protected />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/accounts/create" element={<CreateAccount />} />
+        </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
